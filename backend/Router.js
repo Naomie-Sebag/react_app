@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const session = require("express-session");
+const { json } = require('body-parser');
 
 // Middleware
 app.use(bodyParser.json());
@@ -45,9 +46,10 @@ router.post('/signup', (request, response) => {
 			fullName:request.body.fullName,
 			username:request.body.username,
 			email:request.body.email,
-			password:hashedPassword
+			password:hashedPassword,
+      isManager:request.body.isManager
 		});
-
+    
 		signedUpUser.save()
 		.then(data =>{
 			response.json(data)
@@ -76,8 +78,16 @@ router.post("/login", (request, response) => {
   User.findOne({ username: request.body.username }, async (err, doc) => {
 		if (err) throw err;
 		if (doc) {
-      
-      response.send("User Authentication success");
+     // console.log((doc));
+      response.json({
+                    authentication: {
+                      "username": doc.username,
+                      "fullName": doc.fullName,
+                      "isManager": doc.isManager
+                    },
+                    message: "User Authentication success"
+      })
+      // response.send("User Authentication success");
     }
 		if (!doc) {
 		  const hashedPassword = await bcrypt.hash(request.body.password, 10);

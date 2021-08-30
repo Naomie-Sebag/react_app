@@ -17,6 +17,10 @@ const user = new mongoose.Schema({
         type:String,
         required: true
     },
+    isManager:{
+        type:String,
+        default:false
+    },
     date:{
         type:Date,
         default:Date.now
