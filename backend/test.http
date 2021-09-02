@@ -1,9 +1,56 @@
-POST http://localhost:4000/app/signup
+# POST http://localhost:4000/app/signup
+# Content-Type: application/json
+
+# {
+#     "fullName": "Naomie",
+#     "username": "joey",
+#     "email": "mail@.com",
+#     "password":"yoyo"
+# }
+
+POST http://localhost:4000/app/grouporders
+
 Content-Type: application/json
 
-{
-    "fullName": "Naomie",
-    "username": "joey",
-    "email": "mail@.com",
-    "password":"yoyo"
-}
+
+#  {
+#   "size": 2,
+#   "orders": 
+#      [ {
+#           "order_id": "001",
+#           "order_date": "2020/02/01",
+#           "sender_name": "Alpha",
+#           "sender_full_address": "Jakarta",
+#           "recipient_name": "John",
+#           "recipient_full_address": "Jakarta",
+#           "latitude_from": -6.316171, 
+#           "longitude_from": 106.917322,
+#           "latitude_to": -6.322157,
+#           "longitude_to": 106.931853
+#       },
+#       {
+#         "order_id": "002",
+#           "order_date": "2020/02/01",
+#           "sender_name": "Beta",
+#           "sender_full_address": "Jakarta",
+#           "recipient_name": "George",
+#           "recipient_full_address": "Jakarta",
+#           "latitude_from": -6.316171, 
+#           "longitude_from": 106.917322,
+#           "latitude_to": -6.321741,
+#           "longitude_to": 106.92533
+#       },
+#       {
+#         "order_id": "003",
+#           "order_date": "2020/02/01",
+#           "sender_name": "Charlie",
+#           "sender_full_address": "Jakarta",
+#           "recipient_name": "John",
+#           "recipient_full_address": "Jakarta",
+#           "latitude_from": -6.316171, 
+#           "longitude_from": 106.917322,
+#           "latitude_to": -6.321062,
+#           "longitude_to": 106.924632
+#       }
+  
+#       ] }

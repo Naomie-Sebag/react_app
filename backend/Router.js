@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const User =require('./models/SignUpModels')
+const Pack =require('./models/PackagesModels')
+
 const bcrypt = require("bcryptjs")
 
 const passport = require("passport");
@@ -9,7 +11,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const session = require("express-session");
-const { json } = require('body-parser');
+
 
 // Middleware
 app.use(bodyParser.json());
@@ -47,7 +49,8 @@ router.post('/signup', (request, response) => {
 			username:request.body.username,
 			email:request.body.email,
 			password:hashedPassword,
-      isManager:request.body.isManager
+      isManager:request.body.isManager,
+      city:request.body.city
 		});
     
 		signedUpUser.save()
@@ -64,17 +67,6 @@ router.post('/signup', (request, response) => {
 
 
 router.post("/login", (request, response) => {
-  // passport.authenticate("local", (err, user, info) => {
-  //   if (err) throw err;
-  //   if (!user) res.send("No User Exists");
-  //   else {
-  //     req.logIn(user, (err) => {
-  //       if (err) throw err;
-  //       res.send("Successfully Authenticated");
-  //       console.log(req.user);
-  //     });
-  //   }
-  // })(req, res, next);
   User.findOne({ username: request.body.username }, async (err, doc) => {
 		if (err) throw err;
 		if (doc) {
@@ -87,7 +79,6 @@ router.post("/login", (request, response) => {
                     },
                     message: "User Authentication success"
       })
-      // response.send("User Authentication success");
     }
 		if (!doc) {
 		  const hashedPassword = await bcrypt.hash(request.body.password, 10);
@@ -97,6 +88,55 @@ router.post("/login", (request, response) => {
   })
 
 });
+
+
+router.post("/showPacks",  (request, response) => {
+
+
+  User.findOne({ username: request.body.user_ }, async (err, doc) => {
+		if (err) throw err;
+		if (doc) {
+
+      Pack.find({AssignedTo: request.body.user_}, async (err, result) =>  {
+        if (err) throw err;
+        console.log(result);
+
+       response.send(result)
+
+
+      })
+
+  }
+
+  });
+
+})
+
+
+router.post("/createPack", (req, res) => {
+  const CreatePackage = new Pack({
+    receiver_name:req.body.receiver_name,
+    latitude:req.body.latitude,
+    longitude:req.body.longitude,
+          address:req.body.address
+  });
+
+  CreatePackage.save()
+  .then(data =>{
+    res.json(data)
+  })
+  .catch(error =>{
+    res.json(error)
+  })
+});
+
+
+//k-means
+var clusters = require('./clustering.js');
+
+router.post('/grouporders', clusters.groupOrders);
+
+
 module.exports = router
 
 // const bcrypt = require('bcrypt');

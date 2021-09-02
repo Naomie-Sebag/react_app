@@ -23,6 +23,7 @@
     "express-mysql-session": "^2.1.6",
     "express-session": "^1.17.2",
     "mysql": "^2.18.1",
+    "node-kmeans": "^1.1.9",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
   }
